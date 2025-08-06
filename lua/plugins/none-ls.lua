@@ -10,6 +10,7 @@ return {
         null_ls.builtins.formatting.prettier,
         null_ls.builtins.diagnostics.pylint,
         null_ls.builtins.diagnostics.stylelint,
+        null_ls.builtins.diagnostics.staticcheck
       },
     })
     vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})

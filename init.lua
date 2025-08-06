@@ -17,3 +17,11 @@ vim.opt.rtp:prepend(lazypath)
 
 require("vim-options")
 require("lazy").setup("plugins")
+
+vim.filetype.add({
+  extension = {
+    j2 = 'jinja',
+    jinja = 'jinja',
+  },
+})
+
