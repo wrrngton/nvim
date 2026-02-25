@@ -9,7 +9,7 @@ return {
   "williamboman/mason-lspconfig.nvim",
   config = function()
     require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "pylsp", "ts_ls", "cssls", "intelephense"}
+        ensure_installed = { "lua_ls", "pylsp", "ts_ls", "cssls", "intelephense", "jsonls"}
       })
   end
   },
@@ -25,7 +25,7 @@ return {
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
     -- List your language servers
-    local servers = { lua_ls = {}, pylsp = {}, ts_ls = {}, gopls = {}, cssls = {}, intelephense = {}}
+    local servers = { lua_ls = {}, pylsp = {}, ts_ls = {}, gopls = {}, cssls = {}, intelephense = {}, jsonls = {}}
 
     for name, config in pairs(servers) do
       config.capabilities = capabilities
