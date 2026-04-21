@@ -10,14 +10,22 @@ return {
     require("neo-tree").setup({
       filesystem = {
         filtered_items = {
-          visible = true,  -- Show hidden files
-          hide_dotfiles = false,  -- Don't hide dotfiles (files starting with .)
-          hide_gitignored = false,  -- Show Git ignored files
+          visible = true,
+          hide_dotfiles = false,
+          hide_gitignored = false,
+        },
+      },
+
+      event_handlers = {
+        {
+          event = "neo_tree_buffer_enter",
+          handler = function()
+            vim.opt_local.number = true
+          end,
         },
       },
     })
 
-    vim.keymap.set('n', '<C-n>', ':Neotree filesystem reveal left<CR>', {})
+    vim.keymap.set('n', '<C-n>', ':Neotree filesystem toggle left<CR>', {})
   end
 }
-

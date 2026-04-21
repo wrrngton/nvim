@@ -9,8 +9,21 @@ return {
   "williamboman/mason-lspconfig.nvim",
   config = function()
     require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "pylsp", "ts_ls", "cssls", "intelephense", "jsonls"}
+        ensure_installed = { "lua_ls", "pylsp", "ts_ls", "cssls", "intelephense", "jsonls", "tailwindcss" }
       })
+  end
+  },
+  {
+  "jay-babu/mason-null-ls.nvim",
+  dependencies = { "williamboman/mason.nvim", "nvimtools/none-ls.nvim" },
+  config = function()
+    require("mason-null-ls").setup({
+      ensure_installed = {
+        "stylua", "black", "isort", "prettier",
+        "pylint", "stylelint", "staticcheck", "djlint",
+      },
+      automatic_installation = false,
+    })
   end
   },
   {
@@ -25,12 +38,29 @@ return {
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
     -- List your language servers
-    local servers = { lua_ls = {}, pylsp = {}, ts_ls = {}, gopls = {}, cssls = {}, intelephense = {}, jsonls = {}}
+    local servers = { lua_ls = {}, pylsp = {}, ts_ls = {}, gopls = {}, cssls = {}, intelephense = {}, jsonls = {} }
 
     for name, config in pairs(servers) do
       config.capabilities = capabilities
       lspconfig[name].setup(config)
     end
+
+    lspconfig.tailwindcss.setup({
+      capabilities = capabilities,
+      filetypes = {
+        'aspnetcorerazor', 'astro', 'astro-markdown', 'blade', 'clojure', 'django-html', 'htmldjango',
+        'edge', 'eelixir', 'elixir', 'ejs', 'erb', 'eruby', 'gohtml', 'gohtmltmpl', 'haml', 'handlebars',
+        'hbs', 'html', 'htmlangular', 'html-eex', 'heex', 'jade', 'leaf', 'liquid', 'markdown', 'mdx',
+        'mustache', 'njk', 'nunjucks', 'php', 'razor', 'slim', 'twig', 'css', 'less', 'postcss', 'sass',
+        'scss', 'stylus', 'sugarss', 'javascript', 'javascriptreact', 'reason', 'rescript', 'typescript',
+        'typescriptreact', 'vue', 'svelte', 'templ', 'jinja.html',
+      },
+      settings = {
+        tailwindCSS = {
+          includeLanguages = { ['jinja.html'] = 'html' },
+        },
+      },
+    })
 
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
