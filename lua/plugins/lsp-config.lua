@@ -38,7 +38,22 @@ return {
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
     -- List your language servers
-    local servers = { lua_ls = {}, pylsp = {}, ts_ls = {}, gopls = {}, cssls = {}, intelephense = {}, jsonls = {} }
+    local servers = {
+      lua_ls = {},
+      pylsp = {
+        settings = { pylsp = { plugins = { jedi = {} } } },
+        on_new_config = function(config, root_dir)
+          for _, venv_dir in ipairs({ ".venv", "venv" }) do
+            local python = root_dir .. "/" .. venv_dir .. "/bin/python"
+            if vim.fn.executable(python) == 1 then
+              config.settings.pylsp.plugins.jedi.environment = python
+              return
+            end
+          end
+        end,
+      },
+      ts_ls = {}, gopls = {}, cssls = {}, intelephense = {}, jsonls = {},
+    }
 
     for name, config in pairs(servers) do
       config.capabilities = capabilities

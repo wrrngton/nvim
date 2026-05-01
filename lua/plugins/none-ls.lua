@@ -11,7 +11,14 @@ return {
         null_ls.builtins.formatting.djlint.with({
           filetypes = { "htmldjango", "jinja" },
         }),
-        null_ls.builtins.diagnostics.pylint,
+        null_ls.builtins.diagnostics.pylint.with({
+          env = function(params)
+            local sp = vim.fn.glob(params.cwd .. "/.venv/lib/python*/site-packages", false, true)
+            if #sp > 0 then
+              return { PYTHONPATH = sp[1] }
+            end
+          end,
+        }),
         null_ls.builtins.diagnostics.stylelint,
         null_ls.builtins.diagnostics.staticcheck
       },
